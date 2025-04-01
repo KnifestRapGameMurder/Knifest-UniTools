@@ -1,0 +1,12 @@
+{
+  "name": "com.knifest.unitools",
+  "displayName": "Knifest UniTools",
+  "description": "Just a bunch of useful things",
+  "version": "0.1.0",
+  "unity": "2022.3",
+  "author": "Knifest (https://github.com/KnifestRapGameMurder)",
+  "dependencies": {
+  },
+  "samples": [
+  ]
+}
