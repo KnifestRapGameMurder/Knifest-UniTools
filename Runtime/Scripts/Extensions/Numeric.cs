@@ -6,14 +6,14 @@ namespace Knifest.UniTools.Extensions
     {
         public static Vector3 ToVector3XZ(this Vector2 vector2) => new Vector3(vector2.x, 0, vector2.y);
 
-        /// Result is in range [0, 1]
+        /// The Result is in range [0, 1]
         public static float ToPseudoRandom(this float input)
         {
             float randomValue = Mathf.Sin(input * 12.9898f + 78.233f) * 43758.5453f;
             return randomValue - Mathf.Floor(randomValue);
         }
 
-        /// Result is in range [0, 1]
+        /// The Result is in range [0, 1]
         public static float ToPseudoRandom(this Vector3 input)
         {
             // Generate a pseudo-random value based on the vector components
@@ -66,5 +66,23 @@ namespace Knifest.UniTools.Extensions
         public static bool IsInRange(this float value, float min, float max) => value >= min && value <= max;
 
         public static bool IsInRange(this int value, int min, int max) => value >= min && value <= max;
+
+        public static Vector2 Remap(this Vector2 value, Vector2 fromMin, Vector2 fromMax, Vector2 toMin, Vector2 toMax)
+        {
+            float remappedX = Remap(value.x, fromMin.x, fromMax.x, toMin.x, toMax.x);
+            float remappedY = Remap(value.y, fromMin.y, fromMax.y, toMin.y, toMax.y);
+
+            return new Vector2(remappedX, remappedY);
+        }
+
+        public static float Remap(this float value, float from1, float to1, float from2, float to2)
+        {
+            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+        }
+
+        public static int Remap(this int value, int from1, int to1, int from2, int to2)
+        {
+            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+        }
     }
 }
