@@ -84,5 +84,19 @@ namespace Knifest.UniTools.Extensions
         {
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
+        
+        public static string FormatNumber(this int number)
+        {
+            if (number >= 1000000)
+            {
+                return (number / 1000000.0).ToString("0.0m");
+            }
+            if (number >= 1000)
+            {
+                return (number / 1000.0).ToString("0.0k");
+            }
+
+            return number.ToString();
+        }
     }
 }

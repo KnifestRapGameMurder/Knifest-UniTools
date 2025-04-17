@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Knifest.UniTools.Extensions;
 using UnityEngine;
 
 namespace Knifest.UniTools
@@ -11,7 +12,8 @@ namespace Knifest.UniTools
         
         private Dictionary<MeshRenderArgs, List<Matrix4x4>> _renderMatrices = new();
         private Dictionary<MeshRenderArgs, Dictionary<string, List<float>>> _renderFloats = new();
-
+        private Dictionary<MeshRenderArgs, Dictionary<string, List<Color>>> _renderColors = new();
+        
         public void Init()
         {
             Params.matProps = new MaterialPropertyBlock();
@@ -21,9 +23,13 @@ namespace Knifest.UniTools
         {
             foreach (var matrices in _renderMatrices.Values) matrices.Clear();
 
-            foreach (var floatProperties in _renderFloats.Values)
-            foreach (var floats in floatProperties.Values)
-                floats.Clear();
+            foreach (var properties in _renderFloats.Values)
+            foreach (var value in properties.Values)
+                value.Clear();
+            
+            foreach (var properties in _renderColors.Values)
+            foreach (var value in properties.Values)
+                value.Clear();
         }
         
         public void AddMatrix(IReadOnlyList<Material> materials, Mesh mesh, Matrix4x4 matrix)
@@ -55,6 +61,21 @@ namespace Knifest.UniTools
                 floatProperties.Add(floatName, new List<float> { value });
         }
         
+        public void AddColor(Material material, Mesh mesh, string parameterName, Color value = default, int submeshIndex = 0)
+        {
+            var key = new MeshRenderArgs(mesh, material, submeshIndex);
+            if (!_renderColors.TryGetValue(key, out var properties))
+            {
+                properties = new Dictionary<string, List<Color>>();
+                _renderColors.Add(key, properties);
+            }
+
+            if (properties.TryGetValue(parameterName, out var values))
+                values.Add(value);
+            else
+                properties.Add(parameterName, new List<Color> { value });
+        }
+        
         public void Render()
         {
             foreach (var renderMatrix in _renderMatrices)
@@ -71,6 +92,14 @@ namespace Knifest.UniTools
             {
                 foreach (var floatProperty in floatProperties.Where(floatProperty => floatProperty.Value.Any()))
                     Params.matProps.SetFloatArray(floatProperty.Key, floatProperty.Value);
+
+                hasProps = true;
+            }
+            
+            if (_renderColors.TryGetValue(args, out var colorProperties))
+            {
+                foreach (var property in colorProperties.Where(property => property.Value.Any()))
+                    Params.matProps.SetVectorArray(property.Key, property.Value.Select(c=>c.ToVector4()).ToList());
 
                 hasProps = true;
             }
