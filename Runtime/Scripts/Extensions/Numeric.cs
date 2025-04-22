@@ -98,5 +98,37 @@ namespace Knifest.UniTools.Extensions
 
             return number.ToString();
         }
+        
+        
+        public static Vector2Int Abs(this Vector2Int value)
+        {
+            value.x = Mathf.Abs(value.x);
+            value.y = Mathf.Abs(value.y);
+            return value;
+        }
+
+        public static Vector2Int AtLeast(this Vector2Int value, Vector2Int minValue)
+        {
+            value.x = Mathf.Max(value.x, minValue.x);
+            value.y = Mathf.Max(value.y, minValue.y);
+            return value;
+        }
+
+        public static Vector2Int AtMost(this Vector2Int value, Vector2Int maxValue)
+        {
+            value.x = Mathf.Min(value.x, maxValue.x);
+            value.y = Mathf.Min(value.y, maxValue.y);
+            return value;
+        }
+
+        public static int MinAxis(this Vector2Int value)
+        {
+            return Mathf.Min(value.x, value.y);
+        }
+
+        public static int MaxAxis(this Vector2Int value)
+        {
+            return Mathf.Max(value.x, value.y);
+        }
     }
 }
