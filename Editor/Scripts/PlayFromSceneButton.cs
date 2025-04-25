@@ -25,21 +25,21 @@ namespace Knifest.UniTools.Editor
             public bool isLoaded;
         }
 
-        // This static constructor will run when Unity is launched
-        static PlayFromSceneWindow()
-        {
-            // Check if the window is already open, if not, show it
-            EditorApplication.delayCall += () =>
-            {
-                // Check if there is already an instance of this window open
-                var existingWindow = Resources.FindObjectsOfTypeAll<PlayFromSceneWindow>();
-                if (existingWindow == null || existingWindow.Length == 0)
-                {
-                    // This will ensure the window reopens after Unity restarts
-                    ShowWindow();
-                }
-            };
-        }
+        // // This static constructor will run when Unity is launched
+        // static PlayFromSceneWindow()
+        // {
+        //     // Check if the window is already open, if not, show it
+        //     EditorApplication.delayCall += () =>
+        //     {
+        //         // Check if there is already an instance of this window open
+        //         var existingWindow = Resources.FindObjectsOfTypeAll<PlayFromSceneWindow>();
+        //         if (existingWindow == null || existingWindow.Length == 0)
+        //         {
+        //             // This will ensure the window reopens after Unity restarts
+        //             ShowWindow();
+        //         }
+        //     };
+        // }
 
         [MenuItem("Tools/Play From Scene Window")]
         public static void ShowWindow()
