@@ -41,7 +41,7 @@ namespace Knifest.UniTools.Editor
         //     };
         // }
 
-        [MenuItem("Tools/Play From Scene Window")]
+        [MenuItem("Window/Knifest/Play From Scene Window", false, int.MaxValue)]
         public static void ShowWindow()
         {
             // Open the window (and make it dockable)
